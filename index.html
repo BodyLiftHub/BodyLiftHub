@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BodyLiftHub</title>
+<style>
+body {font-family: Arial, sans-serif; margin:0; padding:0; background:#f7f7f7; color:#333;}
+header {background:#ff6f61; color:#fff; text-align:center; padding:50px 20px;}
+header h1 {font-size:2.5em; margin:0;}
+header p {font-size:1.2em; margin:10px 0;}
+header .lang-buttons {margin-top:10px;}
+header button {margin:0 5px; padding:8px 15px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;}
+.container {max-width:1000px; margin:auto; padding:40px 20px;}
+h2 {text-align:center; margin-bottom:30px;}
+.categories button {margin:5px; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; font-weight:bold; background:#ff6f61; color:white;}
+.workouts {margin-top:20px;}
+.workouts .exercise {background:white; padding:15px; margin:10px 0; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); display:flex; justify-content:space-between; align-items:center;}
+.workouts .exercise a {text-decoration:none; color:#ff6f61; font-weight:bold;}
+footer {text-align:center; padding:30px 20px; background:#333; color:white; margin-top:50px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1 id="site-title">BodyLiftHub</h1>
+<p id="site-desc">Трансформируй тело, повышай уверенность и полюби себя.</p>
+<div class="lang-buttons">
+<button onclick="setLang('ru')">RU</button>
+<button onclick="setLang('en')">EN</button>
+</div>
+</header>
+
+<div class="container">
+<h2 id="categories-title">Категории тренировок</h2>
+<div class="categories">
+<button onclick="showWorkouts('lower')">Lower Body</button>
+<button onclick="showWorkouts('upper')">Upper Body</button>
+<button onclick="showWorkouts('full')">Full Body</button>
+</div>
+
+<div id="workout-display" class="workouts">
+<p id="select-text">Выберите категорию, чтобы увидеть упражнения.</p>
+</div>
+</div>
+
+<footer>
+<p>© 2026 BodyLiftHub</p>
+</footer>
+
+<script>
+const content = {
+ru:{
+title:"BodyLiftHub",
+desc:"Трансформируй тело, повышай уверенность и полюби себя.",
+categoriesTitle:"Категории тренировок",
+selectText:"Выберите категорию, чтобы увидеть упражнения.",
+workouts:{
+lower:[
+{name:"Приседания", link:"https://drive.google.com/file/d/1"},
+{name:"Выпады", link:"https://drive.google.com/file/d/2"},
+{name:"Мёртвая тяга", link:"https://drive.google.com/file/d/3"},
+{name:"Ягодичный мостик", link:"https://drive.google.com/file/d/4"},
+{name:"Подъёмы на носки", link:"https://drive.google.com/file/d/5"}
+],
+upper:[
+{name:"Жим лёжа", link:"https://drive.google.com/file/d/6"},
+{name:"Подтягивания", link:"https://drive.google.com/file/d/7"},
+{name:"Отжимания", link:"https://drive.google.com/file/d/8"},
+{name:"Разводка гантелей", link:"https://drive.google.com/file/d/9"},
+{name:"Пуловеры", link:"https://drive.google.com/file/d/10"}
+],
+full:[
+{name:"Комплекс Full 1", link:"https://drive.google.com/file/d/11"},
+{name:"Комплекс Full 2", link:"https://drive.google.com/file/d/12"},
+{name:"Комплекс Full 3", link:"https://drive.google.com/file/d/13"},
+{name:"Комплекс Full 4", link:"https://drive.google.com/file/d/14"},
+{name:"Комплекс Full 5", link:"https://drive.google.com/file/d/15"}
+]
+}
+},
+en:{
+title:"BodyLiftHub",
+desc:"Transform your body, boost confidence and embrace your beauty.",
+categoriesTitle:"Workout Categories",
+selectText:"Select a category to view exercises.",
+workouts:{
+lower:[
+{name:"Squats", link:"https://drive.google.com/file/d/1"},
+{name:"Lunges", link:"https://drive.google.com/file/d/2"},
+{name:"Deadlift", link:"https://drive.google.com/file/d/3"},
+{name:"Glute Bridge", link:"https://drive.google.com/file/d/4"},
+{name:"Calf Raises", link:"https://drive.google.com/file/d/5"}
+],
+upper:[
+{name:"Bench Press", link:"https://drive.google.com/file/d/6"},
+{name:"Pull-ups", link:"https://drive.google.com/file/d/7"},
+{name:"Push-ups", link:"https://drive.google.com/file/d/8"},
+{name:"Dumbbell Fly", link:"https://drive.google.com/file/d/9"},
+{name:"Pullovers", link:"https://drive.google.com/file/d/10"}
+],
+full:[
+{name:"Full Body 1", link:"https://drive.google.com/file/d/11"},
+{name:"Full Body 2", link:"https://drive.google.com/file/d/12"},
+{name:"Full Body 3", link:"https://drive.google.com/file/d/13"},
+{name:"Full Body 4", link:"https://drive.google.com/file/d/14"},
+{name:"Full Body 5", link:"https://drive.google.com/file/d/15"}
+]
+}
+}
+};
+
+let currentLang='ru';
+
+function setLang(lang){
+currentLang=lang;
+document.getElementById('site-title').innerText=content[lang].title;
+document.getElementById('site-desc').innerText=content[lang].desc;
+document.getElementById('categories-title').innerText=content[lang].categoriesTitle;
+document.getElementById('select-text').innerText=content[lang].selectText;
+document.getElementById('workout-display').innerHTML=`<p>${content[lang].selectText}</p>`;
+}
+
+function showWorkouts(type){
+const workouts=content[currentLang].workouts[type];
+const display=document.getElementById('workout-display');
+display.innerHTML='';
+workouts.forEach(w=>{
+const div=document.createElement('div');
+div.className='exercise';
+div.innerHTML=`<span>${w.name}</span><a href="${w.link}" target="_blank">Посмотреть / View</a>`;
+display.appendChild(div);
+});
+}
+</script>
+
+</body>
+</html>
